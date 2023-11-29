@@ -10,7 +10,7 @@ import { DragListener } from '../utils/drag-listener';
  */
 export class Tab {
     /** @internal */
-    private readonly _element: HTMLDivElement;
+    private readonly _element: HTMLButtonElement;
     /** @internal */
     private readonly _titleElement: HTMLSpanElement;
     /** @internal */
@@ -70,11 +70,16 @@ export class Tab {
         /** @internal */
         private _dragStartEvent: Tab.DragStartEvent | undefined
     ) {
-        this._element = document.createElement('div');
+        this._element = document.createElement('button');
         this._element.classList.add(DomConstants.ClassName.Tab);
-        this._titleElement = document.createElement('span'); 
+        this._element.setAttribute("role", "tab");
+        this._element.setAttribute("aria-selected", "false");
+        this._element.setAttribute("aria-controls", this._componentItem.componentType as string);
+        this._element.setAttribute("tabindex", "-1");
+
+        this._titleElement = document.createElement('span');
         this._titleElement.classList.add(DomConstants.ClassName.Title);
-        this._closeElement = document.createElement('div'); 
+        this._closeElement = document.createElement('div');
         this._closeElement.classList.add(DomConstants.ClassName.CloseTab);
         this._element.appendChild(this._titleElement);
         this._element.appendChild(this._closeElement);
@@ -132,8 +137,12 @@ export class Tab {
 
         if (isActive) {
             this._element.classList.add(DomConstants.ClassName.Active);
+            this._element.setAttribute("aria-selected", "true");
+            this._element.setAttribute("tabindex", "0");
         } else {
             this._element.classList.remove(DomConstants.ClassName.Active);
+            this._element.setAttribute("aria-selected", "false");
+            this._element.setAttribute("tabindex", "-1");
         }
     }
 

@@ -32,6 +32,7 @@ export class TabsContainer {
     ) {
         this._element = document.createElement('section');
         this._element.classList.add(DomConstants.ClassName.Tabs);
+        this._element.setAttribute('role', 'tablist');
 
         this._dropdownElement = document.createElement('section');
         this._dropdownElement.classList.add(DomConstants.ClassName.TabDropdownList);
